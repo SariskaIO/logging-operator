@@ -13,8 +13,8 @@ extraArgs:
   - -enable-leader-election=true
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
-namespaceOverride: ""
+fullnameOverride: "logging-operator"
+namespaceOverride: "logging"
 
 ## Pod custom labels
 ##
@@ -38,7 +38,8 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector: {}
+nodeSelector:
+  alpha.eksctl.io/nodegroup-name: "managed-ng-private"
 
 tolerations: []
 
@@ -59,7 +60,7 @@ http:
 rbac:
   enabled: true
   psp:
-    enabled: true
+    enabled: false
     annotations:
       seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'
       seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
@@ -71,7 +72,7 @@ rbac:
 
 
 ## SecurityContext holds pod-level security attributes and common container settings.
-## This defaults to non root user with uid 1000 and gid 2000.	*v1.PodSecurityContext	false
+## This defaults to non root user with uid 1000 and gid 2000. *v1.PodSecurityContext  false
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
 podSecurityContext: {}
